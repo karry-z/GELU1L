@@ -1,0 +1,51 @@
+[project]
+name = "gelu-1l"
+version = "0.1.0"
+description = "GELU-1L sparse-autoencoder mechanism-interpretability case study scripts."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "datasets>=4.8.5",
+    "einops>=0.8.2",
+    "huggingface-hub>=1.15.0",
+    "matplotlib>=3.10.9",
+    "numpy>=2.4.5",
+    "pandas>=3.0.3",
+    "scikit-learn>=1.8.0",
+    "scipy>=1.17.1",
+    "torch>=2.11.0",
+    "tqdm>=4.67.3",
+    "transformer-lens>=3.2.1",
+]
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+[tool.uv.sources]
+torch = [
+    { index = "pytorch-cu128", marker = "sys_platform != 'darwin'" }
+]
+torchvision = [
+    { index = "pytorch-cu128", marker = "sys_platform != 'darwin'" }
+]
+torchaudio = [
+    { index = "pytorch-cu128", marker = "sys_platform != 'darwin'" }
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+
+[tool.hatch.build.targets.wheel]
+only-include = ["src"]
+sources = { "src" = "" }
